@@ -1,4 +1,4 @@
-import { LRUMap } from "./lru_map.ts";
+import { LRUMap } from "./lru.ts";
 import {
   assert,
   assertEquals,

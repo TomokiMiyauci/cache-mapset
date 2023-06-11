@@ -10,6 +10,7 @@ export class LRUMap<K, V> implements MapLike<K, V> {
 
   constructor(maxNumOfEntries: number) {
     const maxSize = Math.floor(maxNumOfEntries);
+
     if (!isNonNegativeNumber(maxSize)) {
       throw RangeError("maxNumOfEntries must be non-negative");
     }
