@@ -20,3 +20,20 @@ export interface MapLike<K, V> {
   /** Removes all entries. */
   clear: () => void;
 }
+
+export interface SetLike<T> {
+  /** The number of values. */
+  size: number;
+
+  /** Whether has the given {@link value}. */
+  has: (value: T) => boolean;
+
+  /** Adds the given {@link value}. */
+  add: (value: T) => this;
+
+  /** Deletes the given {@link value}. */
+  delete: (value: T) => boolean;
+
+  /** Removes all values. */
+  clear: () => void;
+}

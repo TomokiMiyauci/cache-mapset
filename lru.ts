@@ -2,7 +2,7 @@
 // This module is browser compatible.
 
 import { isNonNegativeNumber } from "./deps.ts";
-import type { MapLike } from "./types.ts";
+import type { MapLike, SetLike } from "./types.ts";
 
 export class LRUMap<K, V> implements MapLike<K, V> {
   #cache: Map<K, V>;
@@ -61,5 +61,60 @@ export class LRUMap<K, V> implements MapLike<K, V> {
     this.#cache.set(key, value);
 
     return this;
+  }
+}
+
+export class LRUSet<T> implements SetLike<T> {
+  #cache: Set<T>;
+  #maxSize: number;
+
+  constructor(maxNumOfValues: number) {
+    const maxSize = Math.floor(maxNumOfValues);
+
+    if (!isNonNegativeNumber(maxSize)) {
+      throw RangeError("maxNumOfValues must be non-negative");
+    }
+
+    this.#maxSize = maxSize;
+    this.#cache = new Set<T>();
+  }
+
+  has(value: T): boolean {
+    const has = this.#cache.has(value);
+
+    if (has) this.#rollup(value);
+
+    return has;
+  }
+
+  add(value: T): this {
+    if (this.#cache.has(value)) return this.#rollup(value);
+    if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#oldest!);
+    if (this.#maxSize > this.size) this.#cache.add(value);
+
+    return this;
+  }
+
+  delete(value: T): boolean {
+    return this.#cache.delete(value);
+  }
+
+  clear(): void {
+    for (const value of this.#cache) this.#cache.delete(value);
+  }
+
+  get size(): number {
+    return this.#cache.size;
+  }
+
+  #rollup(value: T): this {
+    this.#cache.delete(value);
+    this.#cache.add(value);
+
+    return this;
+  }
+
+  get #oldest(): T | undefined {
+    return this.#cache.values().next().value;
   }
 }
