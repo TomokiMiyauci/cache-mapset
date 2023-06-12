@@ -23,13 +23,15 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
   }
 
   set(key: K, value: V): this {
+    if (!this.#maxSize) return this;
     if (this.has(key)) {
       this.#cache.set(key, value);
 
       return this;
     }
     if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#firstKey!);
-    if (this.#maxSize > this.size) this.#cache.set(key, value);
+
+    this.#cache.set(key, value);
 
     return this;
   }

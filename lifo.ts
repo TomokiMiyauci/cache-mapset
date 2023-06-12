@@ -28,13 +28,15 @@ export class LIFOMap<K, V> implements MapLike<K, V> {
   }
 
   set(key: K, value: V): this {
+    if (!this.#maxSize) return this;
     if (this.#cache.has(key)) {
       this.#cache.set(key, value);
 
       return this;
     }
     if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#latestKey!);
-    if (this.#maxSize > this.size) this.#cache.set(key, value);
+
+    this.#cache.set(key, value);
 
     return this;
   }

@@ -33,9 +33,11 @@ export class LRUMap<K, V> implements MapLike<K, V> {
   }
 
   set(key: K, value: V): this {
-    if (this.has(key)) return this.#rollup(key, value);
+    if (!this.#maxSize) return this;
+    if (this.#cache.has(key)) return this.#rollup(key, value);
     if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#oldestKey!);
-    if (this.#maxSize > this.size) this.#cache.set(key, value);
+
+    this.#cache.set(key, value);
 
     return this;
   }
