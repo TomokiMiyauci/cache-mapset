@@ -2,7 +2,59 @@
 // This module is browser compatible.
 
 import { isNonNegativeNumber } from "./deps.ts";
-import type { SetLike } from "./types.ts";
+import type { MapLike, SetLike } from "./types.ts";
+
+export class LIFOMap<K, V> implements MapLike<K, V> {
+  #cache: Map<K, V>;
+  #maxSize: number;
+
+  constructor(maxNumOfEntries: number) {
+    if (!isNonNegativeNumber(maxNumOfEntries)) {
+      throw RangeError("maxNumOfEntries must be non-negative");
+    }
+
+    const maxSize = Math.floor(maxNumOfEntries);
+
+    this.#maxSize = maxSize;
+    this.#cache = new Map<K, V>();
+  }
+
+  has(key: K): boolean {
+    return this.#cache.has(key);
+  }
+
+  get(key: K): V | undefined {
+    return this.#cache.get(key);
+  }
+
+  set(key: K, value: V): this {
+    if (this.#cache.has(key)) {
+      this.#cache.set(key, value);
+
+      return this;
+    }
+    if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#latestKey!);
+    if (this.#maxSize > this.size) this.#cache.set(key, value);
+
+    return this;
+  }
+
+  delete(key: K): boolean {
+    return this.#cache.delete(key);
+  }
+
+  clear(): void {
+    this.#cache.clear();
+  }
+
+  get size(): number {
+    return this.#cache.size;
+  }
+
+  get #latestKey(): K | undefined {
+    return [...this.#cache.keys()].pop();
+  }
+}
 
 export class LIFOSet<T> implements SetLike<T> {
   #cache: T[];
