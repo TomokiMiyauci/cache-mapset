@@ -13,6 +13,10 @@ Maps and Sets with cache replacement policies, TC39
 [proposal-policy-map-set](https://github.com/tc39/proposal-policy-map-set)
 implementation.
 
+This can be used as a cache for TC39
+[proposal-function-memo](https://github.com/tc39/proposal-function-memo). See
+[memo](https://github.com/TomokiMiyauci/memo) for its implementation.
+
 ## Common
 
 List items common to all implementations.
