@@ -7,7 +7,7 @@ import type { MapLike, SetLike } from "./types.ts";
 /** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with LIFO algorithm.
  * @example
  * ```ts
- * import { LIFOMap } from "https://deno.land/x/cache_policy@$VERSION/lifo.ts";
+ * import { LIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/lifo.ts";
  *
  * declare const maxNumOfEntries: number;
  * const map = new LIFOMap(maxNumOfEntries);
@@ -70,7 +70,7 @@ export class LIFOMap<K, V> implements MapLike<K, V> {
 /** `Set` with an upper limit, objects like. When the upper limit is reached, replaces the value with LIFO algorithm.
  * @example
  * ```ts
- * import { LIFOSet } from "https://deno.land/x/cache_policy@$VERSION/lifo.ts";
+ * import { LIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/lifo.ts";
  *
  * declare const maxNumOfValues: number;
  * const set = new LIFOSet(maxNumOfValues);

@@ -7,7 +7,7 @@ import type { MapLike, SetLike } from "./types.ts";
 /** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with FIFO algorithm.
  * @example
  * ```ts
- * import { FIFOMap } from "https://deno.land/x/cache_policy@$VERSION/fifo.ts";
+ * import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/fifo.ts";
  *
  * declare const maxNumOfEntries: number;
  * const map = new FIFOMap(maxNumOfEntries);
@@ -68,7 +68,7 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
 /** `Set` with an upper limit, objects like. When the upper limit is reached, replaces the value with FIFO algorithm.
  * @example
  * ```ts
- * import { FIFOSet } from "https://deno.land/x/cache_policy@$VERSION/fifo.ts";
+ * import { FIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/fifo.ts";
  *
  * declare const maxNumOfValues: number;
  * const set = new FIFOSet(maxNumOfValues);
