@@ -1,7 +1,7 @@
 # cache-mapset
 
-[![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno)](https://deno.land/x/cache-mapset)
-[![deno doc](https://doc.deno.land/badge.svg)](https://deno.land/x/cache-mapset/mod.ts)
+[![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno)](https://deno.land/x/cache_mapset)
+[![deno doc](https://doc.deno.land/badge.svg)](https://deno.land/x/cache_mapset)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/TomokiMiyauci/cache-mapset)](https://github.com/TomokiMiyauci/cache-mapset/releases)
 [![codecov](https://codecov.io/github/TomokiMiyauci/cache-mapset/branch/main/graph/badge.svg)](https://codecov.io/gh/TomokiMiyauci/cache-mapset)
 [![GitHub](https://img.shields.io/github/license/TomokiMiyauci/cache-mapset)](https://github.com/TomokiMiyauci/cache-mapset/blob/main/LICENSE)
