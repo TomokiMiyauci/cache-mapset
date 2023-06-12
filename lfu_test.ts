@@ -1,6 +1,6 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 
-import { LFUMap } from "./lfu.ts";
+import { LFUMap, LFUSet } from "./lfu.ts";
 import {
   assert,
   assertEquals,
@@ -138,5 +138,103 @@ describe("LFUMap", () => {
     assertFalse(cache.has(0));
     assertFalse(cache.has(1));
     assertEquals(cache.size, 0);
+  });
+});
+
+describe("LFUSet", () => {
+  it("should rollup value with max entries are 1", () => {
+    const cache = new LFUSet(1);
+
+    cache.add(0);
+
+    assertEquals(cache.size, 1);
+    assert(cache.has(0));
+
+    cache.add(1);
+
+    assertEquals(cache.size, 1);
+    assertFalse(cache.has(0));
+    assert(cache.has(1));
+  });
+
+  it("should rollup value with max entries are 2", () => {
+    const cache = new LFUSet(2);
+
+    cache.add(0);
+    cache.add(1);
+
+    assert(cache.has(0));
+    assert(cache.has(1));
+    assertEquals(cache.size, 2);
+
+    cache.add(2);
+
+    assert(cache.has(1));
+    assert(cache.has(2));
+    assertEquals(cache.size, 2);
+
+    cache.add(3);
+
+    assert(cache.has(2));
+    assert(cache.has(3));
+    assertEquals(cache.size, 2);
+  });
+
+  it("size should be 0", () => {
+    const cache = new LFUSet(1);
+
+    assertEquals(cache.size, 0);
+  });
+
+  it("should not cache if the max entries is 0", () => {
+    const cache = new LFUSet(0);
+
+    cache.add(0);
+
+    assertEquals(cache.size, 0);
+    assertFalse(cache.has(0));
+  });
+
+  it("should rollup value", () => {
+    const cache = new LFUSet(2);
+
+    cache.add(0);
+    cache.add(1);
+
+    assertEquals(cache.size, 2);
+
+    cache.add(0);
+    cache.add(2);
+
+    assert(cache.has(0));
+    assert(cache.has(2));
+  });
+
+  it("delete should delete value and return true", () => {
+    const cache = new LFUSet(2);
+
+    cache.add(0);
+
+    assert(cache.has(0));
+    assert(cache.delete(0));
+
+    assertEquals(cache.size, 0);
+  });
+
+  it("clear should clear all values", () => {
+    const cache = new LFUSet(2);
+
+    cache.add(0);
+    cache.add(1);
+
+    assertEquals(cache.size, 2);
+
+    cache.clear();
+
+    assertEquals(cache.size, 0);
+  });
+
+  it("should throw error if max entries is negative", () => {
+    assertThrows(() => new LFUSet(-1));
   });
 });

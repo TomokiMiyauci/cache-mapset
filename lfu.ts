@@ -3,7 +3,7 @@
 
 import { isNonNegativeNumber } from "./deps.ts";
 import { NextMap } from "./utils.ts";
-import type { MapLike } from "./types.ts";
+import type { MapLike, SetLike } from "./types.ts";
 
 const INIT = 1;
 
@@ -122,5 +122,35 @@ export class LFUMap<K, V> implements MapLike<K, V> {
 
   get size(): number {
     return this.#values.size;
+  }
+}
+
+export class LFUSet<T> implements SetLike<T> {
+  #cache: LFUMap<T, void>;
+
+  constructor(maxNumOfEntries: number) {
+    this.#cache = new LFUMap(maxNumOfEntries);
+  }
+
+  has(value: T): boolean {
+    return this.#cache.has(value);
+  }
+
+  add(value: T): this {
+    this.#cache.set(value);
+
+    return this;
+  }
+
+  delete(value: T): boolean {
+    return this.#cache.delete(value);
+  }
+
+  clear(): void {
+    this.#cache.clear();
+  }
+
+  get size(): number {
+    return this.#cache.size;
   }
 }
