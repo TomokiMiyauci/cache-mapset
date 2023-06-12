@@ -43,7 +43,7 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
   }
 
   clear(): void {
-    for (const key of this.#cache.keys()) this.#cache.delete(key);
+    this.#cache.clear();
   }
 
   get size(): number {
@@ -86,7 +86,7 @@ export class FIFOSet<T> implements SetLike<T> {
   }
 
   clear(): void {
-    for (const value of this.#cache.values()) this.#cache.delete(value);
+    this.#cache.clear();
   }
 
   get size(): number {
