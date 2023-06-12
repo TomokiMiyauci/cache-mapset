@@ -4,6 +4,15 @@
 import { assertCapacity } from "./utils.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
+/** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with LIFO algorithm.
+ * @example
+ * ```ts
+ * import { LIFOMap } from "https://deno.land/x/cache_policy@$VERSION/lifo.ts";
+ *
+ * declare const maxNumOfEntries: number;
+ * const map = new LIFOMap(maxNumOfEntries);
+ * ```
+ */
 export class LIFOMap<K, V> implements MapLike<K, V> {
   #cache: Map<K, V>;
   #capacity: number;
@@ -58,6 +67,15 @@ export class LIFOMap<K, V> implements MapLike<K, V> {
   }
 }
 
+/** `Set` with an upper limit, objects like. When the upper limit is reached, replaces the value with LIFO algorithm.
+ * @example
+ * ```ts
+ * import { LIFOSet } from "https://deno.land/x/cache_policy@$VERSION/lifo.ts";
+ *
+ * declare const maxNumOfValues: number;
+ * const set = new LIFOSet(maxNumOfValues);
+ * ```
+ */
 export class LIFOSet<T> implements SetLike<T> {
   #cache: T[];
   #capacity: number;

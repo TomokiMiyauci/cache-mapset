@@ -4,6 +4,15 @@
 import { assertCapacity } from "./utils.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
+/** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with LRU algorithm.
+ * @example
+ * ```ts
+ * import { LRUMap } from "https://deno.land/x/cache_policy@$VERSION/lru.ts";
+ *
+ * declare const maxNumOfEntries: number;
+ * const map = new LRUMap(maxNumOfEntries);
+ * ```
+ */
 export class LRUMap<K, V> implements MapLike<K, V> {
   #cache: Map<K, V>;
   #capacity: number;
@@ -66,6 +75,15 @@ export class LRUMap<K, V> implements MapLike<K, V> {
   }
 }
 
+/** `Set` with an upper limit, objects like. When the upper limit is reached, replaces the value with LRU algorithm.
+ * @example
+ * ```ts
+ * import { LRUSet } from "https://deno.land/x/cache_policy@$VERSION/lru.ts";
+ *
+ * declare const maxNumOfValues: number;
+ * const set = new LRUSet(maxNumOfValues);
+ * ```
+ */
 export class LRUSet<T> implements SetLike<T> {
   #cache: Set<T>;
   #capacity: number;
