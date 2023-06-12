@@ -1,20 +1,19 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { isNonNegativeNumber } from "./deps.ts";
+import { assertCapacity } from "./utils.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
 export class FIFOMap<K, V> implements MapLike<K, V> {
   #cache: Map<K, V>;
-  #maxSize: number;
+  #capacity: number;
+
   constructor(maxNumOfEntries: number) {
-    if (!isNonNegativeNumber(maxNumOfEntries)) {
-      throw RangeError("maxNumOfEntries must be non-negative");
-    }
+    assertCapacity(maxNumOfEntries);
 
-    const maxSize = Math.floor(maxNumOfEntries);
+    const capacity = Math.floor(maxNumOfEntries);
 
-    this.#maxSize = maxSize;
+    this.#capacity = capacity;
     this.#cache = new Map<K, V>();
   }
 
@@ -23,13 +22,13 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
   }
 
   set(key: K, value: V): this {
-    if (!this.#maxSize) return this;
+    if (!this.#capacity) return this;
     if (this.has(key)) {
       this.#cache.set(key, value);
 
       return this;
     }
-    if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#firstKey!);
+    if (this.#capacity <= this.#cache.size) this.#cache.delete(this.#firstKey!);
 
     this.#cache.set(key, value);
 
@@ -59,16 +58,14 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
 
 export class FIFOSet<T> implements SetLike<T> {
   #cache: Set<T>;
-  #maxSize: number;
+  #capacity: number;
   constructor(maxNumOfValues: number) {
-    const maxSize = Math.floor(maxNumOfValues);
+    assertCapacity(maxNumOfValues);
 
-    if (!isNonNegativeNumber(maxSize)) {
-      throw RangeError("maxNumOfValues must be non-negative");
-    }
+    const capacity = Math.floor(maxNumOfValues);
 
     this.#cache = new Set<T>();
-    this.#maxSize = maxSize;
+    this.#capacity = capacity;
   }
 
   has(value: T): boolean {
@@ -77,8 +74,8 @@ export class FIFOSet<T> implements SetLike<T> {
 
   add(value: T): this {
     if (this.#cache.has(value)) return this;
-    if (this.#cache.size >= this.#maxSize) this.#cache.delete(this.#first!);
-    if (this.#cache.size < this.#maxSize) this.#cache.add(value);
+    if (this.#cache.size >= this.#capacity) this.#cache.delete(this.#first!);
+    if (this.#cache.size < this.#capacity) this.#cache.add(value);
 
     return this;
   }

@@ -1,9 +1,10 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 
-import { EmplaceableMap } from "./utils.ts";
+import { assertCapacity, EmplaceableMap } from "./utils.ts";
 import {
   assertEquals,
   assertSpyCalls,
+  assertThrows,
   describe,
   it,
   spy,
@@ -30,5 +31,11 @@ describe("EmplaceableMap", () => {
     assertEquals(map.emplace("a", { insert, update }), "c");
     assertSpyCalls(insert, 0);
     assertSpyCalls(update, 1);
+  });
+});
+
+describe("assertCapacity", () => {
+  it("should throw error if the input is negative", () => {
+    assertThrows(() => assertCapacity(-1));
   });
 });

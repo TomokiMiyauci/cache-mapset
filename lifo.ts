@@ -1,21 +1,19 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { isNonNegativeNumber } from "./deps.ts";
+import { assertCapacity } from "./utils.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
 export class LIFOMap<K, V> implements MapLike<K, V> {
   #cache: Map<K, V>;
-  #maxSize: number;
+  #capacity: number;
 
   constructor(maxNumOfEntries: number) {
-    if (!isNonNegativeNumber(maxNumOfEntries)) {
-      throw RangeError("maxNumOfEntries must be non-negative");
-    }
+    assertCapacity(maxNumOfEntries);
 
-    const maxSize = Math.floor(maxNumOfEntries);
+    const capacity = Math.floor(maxNumOfEntries);
 
-    this.#maxSize = maxSize;
+    this.#capacity = capacity;
     this.#cache = new Map<K, V>();
   }
 
@@ -28,13 +26,15 @@ export class LIFOMap<K, V> implements MapLike<K, V> {
   }
 
   set(key: K, value: V): this {
-    if (!this.#maxSize) return this;
+    if (!this.#capacity) return this;
     if (this.#cache.has(key)) {
       this.#cache.set(key, value);
 
       return this;
     }
-    if (this.#maxSize <= this.#cache.size) this.#cache.delete(this.#latestKey!);
+    if (this.#capacity <= this.#cache.size) {
+      this.#cache.delete(this.#latestKey!);
+    }
 
     this.#cache.set(key, value);
 
@@ -60,17 +60,15 @@ export class LIFOMap<K, V> implements MapLike<K, V> {
 
 export class LIFOSet<T> implements SetLike<T> {
   #cache: T[];
-  #maxSize: number;
+  #capacity: number;
 
   constructor(maxNumOfValues: number) {
-    const maxSize = Math.floor(maxNumOfValues);
+    assertCapacity(maxNumOfValues);
 
-    if (!isNonNegativeNumber(maxSize)) {
-      throw RangeError("maxNumOfValues must be non-negative");
-    }
+    const capacity = Math.floor(maxNumOfValues);
 
     this.#cache = [];
-    this.#maxSize = maxSize;
+    this.#capacity = capacity;
   }
 
   has(value: T): boolean {
@@ -78,11 +76,13 @@ export class LIFOSet<T> implements SetLike<T> {
   }
 
   add(value: T): this {
+    if (!this.#capacity) return this;
     if (this.#cache.includes(value)) return this;
-    if (this.#maxSize <= this.#cache.length) {
+    if (this.#capacity <= this.#cache.length) {
       this.#cache.shift();
     }
-    if (this.#maxSize > this.size) this.#cache.unshift(value);
+
+    this.#cache.unshift(value);
 
     return this;
   }

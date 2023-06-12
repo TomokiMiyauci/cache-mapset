@@ -1,6 +1,8 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
+import { isNonNegativeNumber } from "./deps.ts";
+
 export interface EmplaceCallbacks<K, V> {
   /** Add entry. */
   insert: (key: K) => V;
@@ -18,5 +20,12 @@ export class EmplaceableMap<K, V> extends Map<K, V> {
     this.set(key, value);
 
     return value;
+  }
+}
+
+/** Assert capacity is valid. */
+export function assertCapacity(capacity: number): asserts capacity {
+  if (!isNonNegativeNumber(capacity)) {
+    throw RangeError("capacity must be non-negative");
   }
 }
