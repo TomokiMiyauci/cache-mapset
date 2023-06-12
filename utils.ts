@@ -2,16 +2,21 @@
 // This module is browser compatible.
 
 export interface EmplaceCallbacks<K, V> {
+  /** Add entry. */
   insert: (key: K) => V;
 
+  /** Update the value. */
   update: (existing: V, key: K) => V;
 }
 
-export class NextMap<K, V> extends Map<K, V> {
-  emplace(key: K, callbacks: EmplaceCallbacks<K, V>): void {
+export class EmplaceableMap<K, V> extends Map<K, V> {
+  /** Add a value to a map if the map does not already have something at {@link key}, and will also update an existing value at {@link key}. */
+  emplace(key: K, callbacks: EmplaceCallbacks<K, V>): V {
     const value = this.has(key)
       ? callbacks.update(this.get(key)!, key)
       : callbacks.insert(key);
     this.set(key, value);
+
+    return value;
   }
 }

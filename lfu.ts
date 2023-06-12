@@ -2,7 +2,7 @@
 // This module is browser compatible.
 
 import { isNonNegativeNumber } from "./deps.ts";
-import { NextMap } from "./utils.ts";
+import { EmplaceableMap } from "./utils.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
 const INIT = 1;
@@ -22,7 +22,7 @@ class Container<T> {
 
 export class LFUMap<K, V> implements MapLike<K, V> {
   #values: Map<K, Container<V>> = new Map();
-  #frequency: NextMap<number, Set<K>>;
+  #frequency: EmplaceableMap<number, Set<K>>;
   #minFrequency = INIT;
   #capacity: number;
 
@@ -33,7 +33,7 @@ export class LFUMap<K, V> implements MapLike<K, V> {
 
     const capacity = Math.floor(maxNumOfEntries);
 
-    this.#frequency = new NextMap();
+    this.#frequency = new EmplaceableMap();
     this.#capacity = capacity;
   }
 
