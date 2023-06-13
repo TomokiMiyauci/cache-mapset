@@ -1,7 +1,8 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { assertCapacity } from "./utils.ts";
+import { assertNonNegativeNumber } from "./deps.ts";
+import { Msg } from "./constants.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
 /** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with FIFO algorithm.
@@ -18,7 +19,7 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
   #capacity: number;
 
   constructor(maxNumOfEntries: number) {
-    assertCapacity(maxNumOfEntries);
+    assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
 
     const capacity = Math.floor(maxNumOfEntries);
 
@@ -78,7 +79,7 @@ export class FIFOSet<T> implements SetLike<T> {
   #cache: Set<T>;
   #capacity: number;
   constructor(maxNumOfValues: number) {
-    assertCapacity(maxNumOfValues);
+    assertNonNegativeNumber(maxNumOfValues, Msg.InvalidCapacity, RangeError);
 
     const capacity = Math.floor(maxNumOfValues);
 

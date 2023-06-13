@@ -1,5 +1,5 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-export { isNonNegativeNumber } from "https://deno.land/x/isx@1.4.0/numeric/is_non_negative_number.ts";
+export { assertNonNegativeNumber } from "https://deno.land/x/assertion@1.0.0/number/assert_non_negative_number.ts";
 export { EmplaceableMap } from "https://deno.land/x/upsert@1.0.0/mod.ts";

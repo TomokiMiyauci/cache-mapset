@@ -1,8 +1,8 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { EmplaceableMap } from "./deps.ts";
-import { assertCapacity } from "./utils.ts";
+import { assertNonNegativeNumber, EmplaceableMap } from "./deps.ts";
+import { Msg } from "./constants.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
 const INIT = 1;
@@ -36,7 +36,7 @@ export class LFUMap<K, V> implements MapLike<K, V> {
   #capacity: number;
 
   constructor(maxNumOfEntries: number) {
-    assertCapacity(maxNumOfEntries);
+    assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
 
     const capacity = Math.floor(maxNumOfEntries);
 

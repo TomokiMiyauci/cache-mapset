@@ -37,11 +37,12 @@ export const makeOptions = (version: string): BuildOptions => ({
   },
   packageManager: "pnpm",
   mappings: {
-    "https://deno.land/x/isx@1.4.0/numeric/is_non_negative_number.ts": {
-      name: "@miyauci/isx",
-      version: "1.4.0",
-      subPath: "numeric/is_non_negative_number.js",
-    },
+    "https://deno.land/x/assertion@1.0.0/number/assert_non_negative_number.ts":
+      {
+        name: "@miyauci/assertion",
+        version: "1.0.0",
+        subPath: "number/assert_non_negative_number.js",
+      },
     "https://deno.land/x/upsert@1.0.0/mod.ts": {
       name: "@miyauci/upsert",
       version: "1.0.0",
