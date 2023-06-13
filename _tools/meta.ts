@@ -42,5 +42,9 @@ export const makeOptions = (version: string): BuildOptions => ({
       version: "1.4.0",
       subPath: "numeric/is_non_negative_number.js",
     },
+    "https://deno.land/x/upsert@1.0.0/mod.ts": {
+      name: "@miyauci/upsert",
+      version: "1.0.0",
+    },
   },
 });

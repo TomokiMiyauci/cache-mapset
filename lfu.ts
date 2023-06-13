@@ -1,7 +1,8 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { assertCapacity, EmplaceableMap } from "./utils.ts";
+import { EmplaceableMap } from "./deps.ts";
+import { assertCapacity } from "./utils.ts";
 import type { MapLike, SetLike } from "./types.ts";
 
 const INIT = 1;

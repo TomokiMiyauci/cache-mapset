@@ -2,3 +2,4 @@
 // This module is browser compatible.
 
 export { isNonNegativeNumber } from "https://deno.land/x/isx@1.4.0/numeric/is_non_negative_number.ts";
+export { EmplaceableMap } from "https://deno.land/x/upsert@1.0.0/mod.ts";
