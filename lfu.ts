@@ -16,7 +16,7 @@ class Container<T> {
   }
 
   inc(): number {
-    return this.count++;
+    return ++this.count;
   }
 }
 
