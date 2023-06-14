@@ -100,6 +100,16 @@ describe("LIFOMap", () => {
     assertFalse(cache.has(1));
     assertEquals(cache.size, 0);
   });
+
+  it("delete should delete item and return boolean", () => {
+    const cache = new LIFOMap(1);
+
+    cache.set(0, 0);
+
+    assert(cache.delete(0));
+    assertFalse(cache.has(0));
+    assertFalse(cache.delete(0));
+  });
 });
 
 describe("LIFOSet", () => {
@@ -180,6 +190,12 @@ describe("LIFOSet", () => {
     assert(cache.delete(0));
 
     assertEquals(cache.size, 0);
+  });
+
+  it("should return false if the key is not exist", () => {
+    const cache = new LIFOSet(0);
+
+    assertFalse(cache.delete(0));
   });
 
   it("clear should clear all values", () => {

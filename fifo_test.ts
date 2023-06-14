@@ -100,6 +100,16 @@ describe("FIFOMap", () => {
     assertFalse(cache.has(1));
     assertEquals(cache.size, 0);
   });
+
+  it("delete should delete item and return boolean", () => {
+    const cache = new FIFOMap(1);
+
+    cache.set(0, 0);
+
+    assert(cache.delete(0));
+    assertFalse(cache.has(0));
+    assertFalse(cache.delete(0));
+  });
 });
 
 describe("FIFOSet", () => {

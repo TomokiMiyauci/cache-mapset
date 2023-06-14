@@ -82,6 +82,12 @@ describe("LFUMap", () => {
     assertEquals(cache.get(3), 3);
   });
 
+  it("should return false if the key is not exist", () => {
+    const cache = new LFUMap(0);
+
+    assertFalse(cache.delete(0));
+  });
+
   it("should update if the key is duplicated", () => {
     const cache = new LFUMap(2);
 
