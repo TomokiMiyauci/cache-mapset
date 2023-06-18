@@ -1,4 +1,4 @@
-// Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
+// Copyright © 2023 Tomoki Miyauchi. All rights reserved. MIT license.
 
 import { toIntegerOrInfinity } from "./utils.ts";
 import { assertEquals, describe, it } from "./_dev_deps.ts";

@@ -1,6 +1,7 @@
-// Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
+// Copyright © 2023 Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
+/** `Map` without `Iterator` and its related members. */
 export interface MapLike<K, V> {
   /** The number of entries. */
   size: number;
@@ -21,6 +22,7 @@ export interface MapLike<K, V> {
   clear: () => void;
 }
 
+/** `Set` without `Iterator` and its related members. */
 export interface SetLike<T> {
   /** The number of values. */
   size: number;
