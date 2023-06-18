@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/TomokiMiyauci/cache-mapset/compare/1.0.0-beta.2...1.0.0-beta.3) (2023-06-18)
+
+
+### Features
+
+* **utils:** add NaN check for capacity ([affd6a3](https://github.com/TomokiMiyauci/cache-mapset/commit/affd6a3382624f187b5c252c6adc457f548a4771))
+
 # [1.0.0-beta.2](https://github.com/TomokiMiyauci/cache-mapset/compare/1.0.0-beta.1...1.0.0-beta.2) (2023-06-18)
 
 
