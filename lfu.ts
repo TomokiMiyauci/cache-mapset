@@ -36,13 +36,21 @@ export class LFUMap<K, V> implements MapLike<K, V> {
   #minFrequency = INIT;
   #capacity: number;
 
-  constructor(maxNumOfEntries: number) {
+  /**
+   * @throws {RangeError} If {@link maxNumOfEntries} is invalid range.
+   */
+  constructor(
+    maxNumOfEntries: number,
+    entries?: Readonly<Iterable<readonly [K, V]>>,
+  ) {
     assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
 
     const capacity = Math.floor(maxNumOfEntries);
 
     this.#frequency = new EmplaceableMap();
     this.#capacity = capacity;
+
+    if (entries) for (const [key, value] of entries) this.set(key, value);
   }
 
   has(key: K): boolean {

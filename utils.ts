@@ -10,15 +10,15 @@ export abstract class BaseMap<K, V> implements MapLike<K, V> {
   protected readonly capacity: number;
 
   /**
-   * @throws {RangeError} If {@link maxNumOfEntries} is invalid range.
+   * @throws {RangeError} If {@link capacity} is invalid range.
    */
-  constructor(maxNumOfEntries: number) {
-    assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
+  constructor(capacity: number) {
+    assertNonNegativeNumber(capacity, Msg.InvalidCapacity, RangeError);
 
-    const capacity = Math.floor(maxNumOfEntries);
+    capacity = Math.floor(capacity);
 
-    this.capacity = capacity;
     this.cache = new Map();
+    this.capacity = capacity;
   }
 
   abstract get(key: K): V | undefined;

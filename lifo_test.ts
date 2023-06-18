@@ -110,6 +110,21 @@ describe("LIFOMap", () => {
     assertFalse(cache.has(0));
     assertFalse(cache.delete(0));
   });
+
+  it("should accept initial entries", () => {
+    const map = new LIFOMap(1, [["a", 0]]);
+
+    assertEquals(map.size, 1);
+    assertEquals(map.get("a"), 0);
+  });
+
+  it("should evict overflow", () => {
+    const map = new LIFOMap(2, [["a", 0], ["b", 1], ["c", 2]]);
+
+    assertEquals(map.size, 2);
+    assertEquals(map.get("a"), 0);
+    assertEquals(map.get("c"), 2);
+  });
 });
 
 describe("LIFOSet", () => {

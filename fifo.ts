@@ -13,6 +13,18 @@ import { BaseMap, BaseSet } from "./utils.ts";
  * ```
  */
 export class FIFOMap<K, V> extends BaseMap<K, V> {
+  /**
+   * @throws {RangeError} If {@link maxNumOfEntries} is invalid range.
+   */
+  constructor(
+    maxNumOfEntries: number,
+    entries?: Readonly<Iterable<readonly [K, V]>>,
+  ) {
+    super(maxNumOfEntries);
+
+    if (entries) for (const [key, value] of entries) this.set(key, value);
+  }
+
   get(key: K): V | undefined {
     return this.cache.get(key);
   }

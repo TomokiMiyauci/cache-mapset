@@ -13,6 +13,18 @@ import { BaseMap, BaseSet } from "./utils.ts";
  * ```
  */
 export class LRUMap<K, V> extends BaseMap<K, V> {
+  /**
+   * @throws {RangeError} If {@link maxNumOfEntries} is invalid range.
+   */
+  constructor(
+    maxNumOfEntries: number,
+    entries?: Readonly<Iterable<readonly [K, V]>>,
+  ) {
+    super(maxNumOfEntries);
+
+    if (entries) for (const [key, value] of entries) this.set(key, value);
+  }
+
   get(key: K): V | undefined {
     const has = this.cache.has(key);
     const value = this.cache.get(key);
@@ -25,9 +37,7 @@ export class LRUMap<K, V> extends BaseMap<K, V> {
   set(key: K, value: V): this {
     if (!this.capacity) return this;
     if (this.cache.has(key)) return this.#rollup(key, value);
-    if (this.capacity <= this.cache.size) {
-      this.cache.delete(this.#oldestKey!);
-    }
+    if (this.capacity <= this.cache.size) this.cache.delete(this.#oldestKey!);
 
     this.cache.set(key, value);
 
@@ -56,7 +66,7 @@ export class LRUMap<K, V> extends BaseMap<K, V> {
  * ```
  */
 export class LRUSet<T> extends BaseSet<T> {
-  cache: LRUMap<T, void>;
+  protected cache: LRUMap<T, void>;
 
   constructor(maxNumOfValues: number) {
     super();
