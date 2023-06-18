@@ -1,3 +1,13 @@
+# [1.0.0-beta.2](https://github.com/TomokiMiyauci/cache-mapset/compare/1.0.0-beta.1...1.0.0-beta.2) (2023-06-18)
+
+
+### Features
+
+* change constructor interface to accept initial values ([0f83960](https://github.com/TomokiMiyauci/cache-mapset/commit/0f83960e5323a41a8e480aff5f5c31c6b07dd06a))
+* change to accept initial entries ([dc9d6b0](https://github.com/TomokiMiyauci/cache-mapset/commit/dc9d6b017177cf45de2140314bb7c36e63c5a15f))
+* **deps:** update deps ([13ca145](https://github.com/TomokiMiyauci/cache-mapset/commit/13ca14544b3136e8e892212ce9d9f2c2faf03098))
+* **mod:** export all related modules ([3b9c376](https://github.com/TomokiMiyauci/cache-mapset/commit/3b9c376475cce27e5b1a2ef36a5bd55148ab2355))
+
 # 1.0.0-beta.1 (2023-06-12)
 
 
