@@ -13,17 +13,123 @@
 
 Maps and Sets with cache replacement policies, TC39
 [proposal-policy-map-set](https://github.com/tc39/proposal-policy-map-set)
-implementation.
+implementation. This can be used as a cache for TC39
+[proposal-function-memo](https://github.com/tc39/proposal-function-memo) and its
+[implementation](https://github.com/TomokiMiyauci/memo).
 
-This can be used as a cache for TC39
-[proposal-function-memo](https://github.com/tc39/proposal-function-memo). See
-[memo](https://github.com/TomokiMiyauci/memo) for its implementation.
+## Usage
+
+### FIFO
+
+FIFO(First In, First Out) implementations.
+
+#### FIFOMap
+
+When the upper limit is reached, replaces the entry with FIFO algorithm.
+
+```ts
+import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfEntries: number;
+const map = new FIFOMap(maxNumOfEntries);
+```
+
+#### FIFOSet
+
+When the upper limit is reached, replaces the value with FIFO algorithm.
+
+```ts
+import { FIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfValues: number;
+const set = new FIFOSet(maxNumOfValues);
+```
+
+### LIFO
+
+LIFO(Last In, First Out) implementations.
+
+#### LIFOMap
+
+When the upper limit is reached, replaces the entry with LIFO algorithm.
+
+```ts
+import { LIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfEntries: number;
+const map = new LIFOMap(maxNumOfEntries);
+```
+
+#### LIFOSet
+
+When the upper limit is reached, replaces the value with LIFO algorithm.
+
+```ts
+import { LIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfValues: number;
+const set = new LIFOSet(maxNumOfValues);
+```
+
+### LRU
+
+LRU(Least Recently Used) implementations.
+
+#### LRUMap
+
+When the upper limit is reached, replaces the entry with LRU algorithm.
+
+```ts
+import { LRUMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfEntries: number;
+const map = new LRUMap(maxNumOfEntries);
+```
+
+#### LRUSet
+
+When the upper limit is reached, replaces the value with LRU algorithm.
+
+```ts
+import { LRUSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfValues: number;
+const set = new LRUSet(maxNumOfValues);
+```
+
+### LFU
+
+LFU(Least Frequently Used) implementations.
+
+#### LFUMap
+
+When the upper limit is reached, replaces the entry with LFU algorithm.
+
+```ts
+import { LFUMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfEntries: number;
+const map = new LFUMap(maxNumOfEntries);
+```
+
+#### LFUSet
+
+When the upper limit is reached, replaces the value with LFU algorithm.
+
+```ts
+import { LFUSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+
+declare const maxNumOfValues: number;
+const set = new LFUSet(maxNumOfValues);
+```
 
 ## Common
 
 List items common to all implementations.
 
 ### Interface
+
+All instance have following members.
 
 MapLike:
 
@@ -77,114 +183,10 @@ All constructors specify a capacity as their first argument.
 If it is a negative number, an error is thrown.
 
 ```ts
-import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/fifo.ts";
+import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() => new FIFOMap(-1));
-```
-
-## FIFO
-
-FIFO(First In, First Out) implementations.
-
-### FIFOMap
-
-When the upper limit is reached, replaces the entry with FIFO algorithm.
-
-```ts
-import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/fifo.ts";
-
-declare const maxNumOfEntries: number;
-const map = new FIFOMap(maxNumOfEntries);
-```
-
-### FIFOSet
-
-When the upper limit is reached, replaces the value with FIFO algorithm.
-
-```ts
-import { FIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/fifo.ts";
-
-declare const maxNumOfValues: number;
-const set = new FIFOSet(maxNumOfValues);
-```
-
-## LIFO
-
-LIFO(Last In, First Out) implementations.
-
-### LIFOMap
-
-When the upper limit is reached, replaces the entry with LIFO algorithm.
-
-```ts
-import { LIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/lifo.ts";
-
-declare const maxNumOfEntries: number;
-const map = new LIFOMap(maxNumOfEntries);
-```
-
-### LIFOSet
-
-When the upper limit is reached, replaces the value with LIFO algorithm.
-
-```ts
-import { LIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/lifo.ts";
-
-declare const maxNumOfValues: number;
-const set = new LIFOSet(maxNumOfValues);
-```
-
-## LRU
-
-LRU(Least Recently Used) implementations.
-
-### LRUMap
-
-When the upper limit is reached, replaces the entry with LRU algorithm.
-
-```ts
-import { LRUMap } from "https://deno.land/x/cache_mapset@$VERSION/lru.ts";
-
-declare const maxNumOfEntries: number;
-const map = new LRUMap(maxNumOfEntries);
-```
-
-### LRUSet
-
-When the upper limit is reached, replaces the value with LRU algorithm.
-
-```ts
-import { LRUSet } from "https://deno.land/x/cache_mapset@$VERSION/lru.ts";
-
-declare const maxNumOfValues: number;
-const set = new LRUSet(maxNumOfValues);
-```
-
-## LFU
-
-LFU(Least Frequently Used) implementations.
-
-### LFUMap
-
-When the upper limit is reached, replaces the entry with LFU algorithm.
-
-```ts
-import { LFUMap } from "https://deno.land/x/cache_mapset@$VERSION/lfu.ts";
-
-declare const maxNumOfEntries: number;
-const map = new LFUMap(maxNumOfEntries);
-```
-
-### LFUSet
-
-When the upper limit is reached, replaces the value with LFU algorithm.
-
-```ts
-import { LFUSet } from "https://deno.land/x/cache_mapset@$VERSION/lfu.ts";
-
-declare const maxNumOfValues: number;
-const set = new LFUSet(maxNumOfValues);
 ```
 
 ## API
