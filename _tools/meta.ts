@@ -4,7 +4,7 @@ export const makeOptions = (version: string): BuildOptions => ({
   test: false,
   shims: {},
   typeCheck: "both",
-  entryPoints: ["./lru.ts", "./lfu.ts", "./fifo.ts", "./lifo.ts"],
+  entryPoints: ["./mod.ts"],
   outDir: "./npm",
   package: {
     name: "cache-mapset",
