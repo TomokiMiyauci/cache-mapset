@@ -9,10 +9,13 @@ export abstract class BaseMap<K, V> implements MapLike<K, V> {
   protected readonly cache: Readonly<Map<K, V>>;
   protected readonly capacity: number;
 
-  constructor(maxNumOfValues: number) {
-    assertNonNegativeNumber(maxNumOfValues, Msg.InvalidCapacity, RangeError);
+  /**
+   * @throws {RangeError} If {@link maxNumOfEntries} is invalid range.
+   */
+  constructor(maxNumOfEntries: number) {
+    assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
 
-    const capacity = Math.floor(maxNumOfValues);
+    const capacity = Math.floor(maxNumOfEntries);
 
     this.capacity = capacity;
     this.cache = new Map();
