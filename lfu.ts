@@ -3,7 +3,8 @@
 
 import { assertNonNegativeNumber, EmplaceableMap } from "./deps.ts";
 import { Msg } from "./constants.ts";
-import type { MapLike, SetLike } from "./types.ts";
+import { BaseSet } from "./utils.ts";
+import type { MapLike } from "./types.ts";
 
 const INIT = 1;
 
@@ -141,32 +142,11 @@ export class LFUMap<K, V> implements MapLike<K, V> {
  * const set = new LFUSet(maxNumOfValues);
  * ```
  */
-export class LFUSet<T> implements SetLike<T> {
-  #cache: LFUMap<T, void>;
+export class LFUSet<T> extends BaseSet<T> {
+  protected cache: LFUMap<T, void>;
 
   constructor(maxNumOfValues: number) {
-    this.#cache = new LFUMap(maxNumOfValues);
-  }
-
-  has(value: T): boolean {
-    return this.#cache.has(value);
-  }
-
-  add(value: T): this {
-    this.#cache.set(value);
-
-    return this;
-  }
-
-  delete(value: T): boolean {
-    return this.#cache.delete(value);
-  }
-
-  clear(): void {
-    this.#cache.clear();
-  }
-
-  get size(): number {
-    return this.#cache.size;
+    super();
+    this.cache = new LFUMap(maxNumOfValues);
   }
 }

@@ -1,9 +1,7 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { assertNonNegativeNumber } from "./deps.ts";
-import { Msg } from "./constants.ts";
-import type { MapLike, SetLike } from "./types.ts";
+import { BaseMap, BaseSet } from "./utils.ts";
 
 /** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with FIFO algorithm.
  * @example
@@ -14,55 +12,27 @@ import type { MapLike, SetLike } from "./types.ts";
  * const map = new FIFOMap(maxNumOfEntries);
  * ```
  */
-export class FIFOMap<K, V> implements MapLike<K, V> {
-  #cache: Map<K, V>;
-  #capacity: number;
-
-  constructor(maxNumOfEntries: number) {
-    assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
-
-    const capacity = Math.floor(maxNumOfEntries);
-
-    this.#capacity = capacity;
-    this.#cache = new Map<K, V>();
-  }
-
-  has(key: K): boolean {
-    return this.#cache.has(key);
+export class FIFOMap<K, V> extends BaseMap<K, V> {
+  get(key: K): V | undefined {
+    return this.cache.get(key);
   }
 
   set(key: K, value: V): this {
-    if (!this.#capacity) return this;
-    if (this.has(key)) {
-      this.#cache.set(key, value);
+    if (!this.capacity) return this;
+    if (this.cache.has(key)) {
+      this.cache.set(key, value);
 
       return this;
     }
-    if (this.#capacity <= this.#cache.size) this.#cache.delete(this.#firstKey!);
+    if (this.capacity <= this.cache.size) this.cache.delete(this.#firstKey!);
 
-    this.#cache.set(key, value);
+    this.cache.set(key, value);
 
     return this;
   }
 
-  get(key: K): V | undefined {
-    return this.#cache.get(key);
-  }
-
-  delete(key: K): boolean {
-    return this.#cache.delete(key);
-  }
-
-  clear(): void {
-    this.#cache.clear();
-  }
-
-  get size(): number {
-    return this.#cache.size;
-  }
-
   get #firstKey(): K | undefined {
-    return this.#cache.keys().next().value;
+    return this.cache.keys().next().value;
   }
 }
 
@@ -75,43 +45,11 @@ export class FIFOMap<K, V> implements MapLike<K, V> {
  * const set = new FIFOSet(maxNumOfValues);
  * ```
  */
-export class FIFOSet<T> implements SetLike<T> {
-  #cache: Set<T>;
-  #capacity: number;
+export class FIFOSet<T> extends BaseSet<T> {
+  protected cache: FIFOMap<T, void>;
+
   constructor(maxNumOfValues: number) {
-    assertNonNegativeNumber(maxNumOfValues, Msg.InvalidCapacity, RangeError);
-
-    const capacity = Math.floor(maxNumOfValues);
-
-    this.#cache = new Set<T>();
-    this.#capacity = capacity;
-  }
-
-  has(value: T): boolean {
-    return this.#cache.has(value);
-  }
-
-  add(value: T): this {
-    if (this.#cache.has(value)) return this;
-    if (this.#cache.size >= this.#capacity) this.#cache.delete(this.#first!);
-    if (this.#cache.size < this.#capacity) this.#cache.add(value);
-
-    return this;
-  }
-
-  delete(value: T): boolean {
-    return this.#cache.delete(value);
-  }
-
-  clear(): void {
-    this.#cache.clear();
-  }
-
-  get size(): number {
-    return this.#cache.size;
-  }
-
-  get #first(): T | undefined {
-    return this.#cache.values().next().value;
+    super();
+    this.cache = new FIFOMap(maxNumOfValues);
   }
 }

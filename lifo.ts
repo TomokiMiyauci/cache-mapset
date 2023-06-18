@@ -1,9 +1,7 @@
 // Copyright 2023-latest Tomoki Miyauchi. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { assertNonNegativeNumber } from "./deps.ts";
-import { Msg } from "./constants.ts";
-import type { MapLike, SetLike } from "./types.ts";
+import { BaseMap, BaseSet } from "./utils.ts";
 
 /** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with LIFO algorithm.
  * @example
@@ -14,57 +12,29 @@ import type { MapLike, SetLike } from "./types.ts";
  * const map = new LIFOMap(maxNumOfEntries);
  * ```
  */
-export class LIFOMap<K, V> implements MapLike<K, V> {
-  #cache: Map<K, V>;
-  #capacity: number;
-
-  constructor(maxNumOfEntries: number) {
-    assertNonNegativeNumber(maxNumOfEntries, Msg.InvalidCapacity, RangeError);
-
-    const capacity = Math.floor(maxNumOfEntries);
-
-    this.#capacity = capacity;
-    this.#cache = new Map<K, V>();
-  }
-
-  has(key: K): boolean {
-    return this.#cache.has(key);
-  }
-
+export class LIFOMap<K, V> extends BaseMap<K, V> {
   get(key: K): V | undefined {
-    return this.#cache.get(key);
+    return this.cache.get(key);
   }
 
   set(key: K, value: V): this {
-    if (!this.#capacity) return this;
-    if (this.#cache.has(key)) {
-      this.#cache.set(key, value);
+    if (!this.capacity) return this;
+    if (this.cache.has(key)) {
+      this.cache.set(key, value);
 
       return this;
     }
-    if (this.#capacity <= this.#cache.size) {
-      this.#cache.delete(this.#latestKey!);
+    if (this.capacity <= this.cache.size) {
+      this.cache.delete(this.#latestKey!);
     }
 
-    this.#cache.set(key, value);
+    this.cache.set(key, value);
 
     return this;
   }
 
-  delete(key: K): boolean {
-    return this.#cache.delete(key);
-  }
-
-  clear(): void {
-    this.#cache.clear();
-  }
-
-  get size(): number {
-    return this.#cache.size;
-  }
-
   get #latestKey(): K | undefined {
-    return [...this.#cache.keys()].pop();
+    return [...this.cache.keys()].pop();
   }
 }
 
@@ -77,52 +47,10 @@ export class LIFOMap<K, V> implements MapLike<K, V> {
  * const set = new LIFOSet(maxNumOfValues);
  * ```
  */
-export class LIFOSet<T> implements SetLike<T> {
-  #cache: T[];
-  #capacity: number;
-
+export class LIFOSet<T> extends BaseSet<T> {
+  protected cache: LIFOMap<T, void>;
   constructor(maxNumOfValues: number) {
-    assertNonNegativeNumber(maxNumOfValues, Msg.InvalidCapacity, RangeError);
-
-    const capacity = Math.floor(maxNumOfValues);
-
-    this.#cache = [];
-    this.#capacity = capacity;
-  }
-
-  has(value: T): boolean {
-    return this.#cache.includes(value);
-  }
-
-  add(value: T): this {
-    if (!this.#capacity) return this;
-    if (this.#cache.includes(value)) return this;
-    if (this.#capacity <= this.#cache.length) {
-      this.#cache.shift();
-    }
-
-    this.#cache.unshift(value);
-
-    return this;
-  }
-
-  delete(value: T): boolean {
-    const index = this.#cache.findIndex((el) => el === value);
-
-    if (index >= 0) {
-      this.#cache.splice(index, 1);
-
-      return true;
-    }
-
-    return false;
-  }
-
-  clear(): void {
-    this.#cache.length = 0;
-  }
-
-  get size(): number {
-    return this.#cache.length;
+    super();
+    this.cache = new LIFOMap(maxNumOfValues);
   }
 }
