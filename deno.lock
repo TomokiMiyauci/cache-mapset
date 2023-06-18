@@ -1,0 +1,24 @@
+{
+  "version": "2",
+  "remote": {
+    "https://deno.land/std@0.190.0/fmt/colors.ts": "d67e3cd9f472535241a8e410d33423980bec45047e343577554d3356e1f0ef4e",
+    "https://deno.land/std@0.190.0/testing/_diff.ts": "1a3c044aedf77647d6cac86b798c6417603361b66b54c53331b312caeb447aea",
+    "https://deno.land/std@0.190.0/testing/_format.ts": "a69126e8a469009adf4cf2a50af889aca364c349797e63174884a52ff75cf4c7",
+    "https://deno.land/std@0.190.0/testing/_test_suite.ts": "30f018feeb3835f12ab198d8a518f9089b1bcb2e8c838a8b615ab10d5005465c",
+    "https://deno.land/std@0.190.0/testing/asserts.ts": "e16d98b4d73ffc4ed498d717307a12500ae4f2cbe668f1a215632d19fcffc22f",
+    "https://deno.land/std@0.190.0/testing/bdd.ts": "59f7f7503066d66a12e50ace81bfffae5b735b6be1208f5684b630ae6b4de1d0",
+    "https://deno.land/std@0.190.0/testing/mock.ts": "220ed9b8151cb2cac141043d4cfea7c47673fab5d18d1c1f0943297c8afb5d13",
+    "https://deno.land/x/assertion@1.0.0/number/assert_non_negative_number.ts": "b81b369d5ac868c6c3750baf15ed9f076931e0f0f0bb033ce726e6df8acd2154",
+    "https://deno.land/x/assertion@1.0.0/types.ts": "ae363b04e8d577c77482c3296d2c65aa04e0c8a4ceecdf578f23826def54f824",
+    "https://deno.land/x/isx@1.3.1/number/is_non_negative_number.ts": "f15cd87d20cad9d951163e21be0866fa79af1a7f7aa317163c8e90b19491ae65",
+    "https://deno.land/x/isx@1.3.1/number/is_positive_number.ts": "a724aa745afd3fe294603b2c104f42d846eba6cbc1e29d2e5384bcfe260ad82b",
+    "https://deno.land/x/upsert@1.0.0/class.ts": "8a9af381c514c9631965889171f67041cf18489bce9b383d805aa96db74851cc",
+    "https://deno.land/x/upsert@1.0.0/emplace.ts": "d42e66c525e00f2806ff7c270a6e5cc4092ecd498368343e87a98ca7259a63d8",
+    "https://deno.land/x/upsert@1.0.0/mixin.ts": "ae652c887bd90f95969a1395d5b1ebd697e2fed4ee460d8282e59e73cfcc8f8b",
+    "https://deno.land/x/upsert@1.0.0/mod.ts": "b539273ac26f46a6fe3d87854944e58b377be259e5d251202743b63f6c180120",
+    "https://deno.land/x/upsert@1.1.0/class.ts": "8a9af381c514c9631965889171f67041cf18489bce9b383d805aa96db74851cc",
+    "https://deno.land/x/upsert@1.1.0/emplace.ts": "d19fe84f23133b9a77d04aad9fb51f83fb20446bc335c404749b5610408a3570",
+    "https://deno.land/x/upsert@1.1.0/mixin.ts": "2c758419ad5291411c88075e31bd1efa8521c0368d1f23e8e50669668d5b1174",
+    "https://deno.land/x/upsert@1.1.0/mod.ts": "b539273ac26f46a6fe3d87854944e58b377be259e5d251202743b63f6c180120"
+  }
+}
