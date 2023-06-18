@@ -61,8 +61,14 @@ export class LIFOMap<K, V> extends BaseMap<K, V> {
  */
 export class LIFOSet<T> extends BaseSet<T> {
   protected cache: LIFOMap<T, void>;
-  constructor(maxNumOfValues: number) {
+
+  /**
+   * @throws {RangeError} If {@link maxNumOfValues} is invalid range.
+   */
+  constructor(maxNumOfValues: number, values?: Readonly<Iterable<T>>) {
     super();
     this.cache = new LIFOMap(maxNumOfValues);
+
+    if (values) for (const el of values) this.add(el);
   }
 }

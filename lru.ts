@@ -68,8 +68,13 @@ export class LRUMap<K, V> extends BaseMap<K, V> {
 export class LRUSet<T> extends BaseSet<T> {
   protected cache: LRUMap<T, void>;
 
-  constructor(maxNumOfValues: number) {
+  /**
+   * @throws {RangeError} If {@link maxNumOfValues} is invalid range.
+   */
+  constructor(maxNumOfValues: number, values?: Readonly<Iterable<T>>) {
     super();
     this.cache = new LRUMap(maxNumOfValues);
+
+    if (values) for (const el of values) this.add(el);
   }
 }

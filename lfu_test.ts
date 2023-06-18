@@ -258,4 +258,12 @@ describe("LFUSet", () => {
   it("should throw error if max entries is negative", () => {
     assertThrows(() => new LFUSet(-1));
   });
+
+  it("should accept initial values", () => {
+    const map = new LFUSet(2, [0, 1, 2]);
+
+    assertEquals(map.size, 2);
+    assert(map.has(1));
+    assert(map.has(2));
+  });
 });

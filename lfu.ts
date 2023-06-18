@@ -153,8 +153,13 @@ export class LFUMap<K, V> implements MapLike<K, V> {
 export class LFUSet<T> extends BaseSet<T> {
   protected cache: LFUMap<T, void>;
 
-  constructor(maxNumOfValues: number) {
+  /**
+   * @throws {RangeError} If {@link maxNumOfValues} is invalid range.
+   */
+  constructor(maxNumOfValues: number, values?: Readonly<Iterable<T>>) {
     super();
     this.cache = new LFUMap(maxNumOfValues);
+
+    if (values) for (const el of values) this.add(el);
   }
 }

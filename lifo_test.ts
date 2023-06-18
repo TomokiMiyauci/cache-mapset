@@ -229,4 +229,12 @@ describe("LIFOSet", () => {
   it("should throw error if max entries is negative", () => {
     assertThrows(() => new LIFOSet(-1));
   });
+
+  it("should accept initial values", () => {
+    const map = new LIFOSet(2, [0, 1, 2]);
+
+    assertEquals(map.size, 2);
+    assert(map.has(0));
+    assert(map.has(2));
+  });
 });

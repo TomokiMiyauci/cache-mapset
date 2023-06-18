@@ -60,8 +60,13 @@ export class FIFOMap<K, V> extends BaseMap<K, V> {
 export class FIFOSet<T> extends BaseSet<T> {
   protected cache: FIFOMap<T, void>;
 
-  constructor(maxNumOfValues: number) {
+  /**
+   * @throws {RangeError} If {@link maxNumOfValues} is invalid range.
+   */
+  constructor(maxNumOfValues: number, values?: Readonly<Iterable<T>>) {
     super();
     this.cache = new FIFOMap(maxNumOfValues);
+
+    if (values) for (const el of values) this.add(el);
   }
 }
