@@ -19,164 +19,78 @@ implementation. This can be used as a cache for TC39
 
 ## Usage
 
-### FIFO
+All Map-like constructors specify capacity.
 
-FIFO(First In, First Out) implementations.
-
-#### FIFOMap
-
-When the upper limit is reached, replaces the entry with FIFO algorithm.
-
-```ts
-import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
-
-declare const maxNumOfEntries: number;
-const map = new FIFOMap(maxNumOfEntries);
-```
-
-#### FIFOSet
-
-When the upper limit is reached, replaces the value with FIFO algorithm.
-
-```ts
-import { FIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
-
-declare const maxNumOfValues: number;
-const set = new FIFOSet(maxNumOfValues);
-```
-
-### LIFO
-
-LIFO(Last In, First Out) implementations.
-
-#### LIFOMap
-
-When the upper limit is reached, replaces the entry with LIFO algorithm.
-
-```ts
-import { LIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
-
-declare const maxNumOfEntries: number;
-const map = new LIFOMap(maxNumOfEntries);
-```
-
-#### LIFOSet
-
-When the upper limit is reached, replaces the value with LIFO algorithm.
-
-```ts
-import { LIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
-
-declare const maxNumOfValues: number;
-const set = new LIFOSet(maxNumOfValues);
-```
-
-### LRU
-
-LRU(Least Recently Used) implementations.
-
-#### LRUMap
-
-When the upper limit is reached, replaces the entry with LRU algorithm.
+When the limit is reached, the cache is adjusted according to the cache
+replacement policy.
 
 ```ts
 import { LRUMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { assert, assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
-declare const maxNumOfEntries: number;
-const map = new LRUMap(maxNumOfEntries);
+declare const capacity: 2;
+
+const map = new LRUMap<number, string>(capacity);
+
+map.set(200, "Ok");
+map.set(201, "Created");
+
+assertEquals(map.size, 2);
+
+map.set(202, "Accepted");
+
+assertEquals(map.size, 2);
+assert(map.has(201));
+assert(map.has(202));
 ```
 
-#### LRUSet
+It provides a Map-like constructor with the following cache-replacement-policy:
 
-When the upper limit is reached, replaces the value with LRU algorithm.
+- [FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))
+- [LIFO](https://en.wikipedia.org/wiki/LIFO)
+- [LRU](https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU)
+- [LFU](https://en.wikipedia.org/wiki/Least_frequently_used)
 
-```ts
-import { LRUSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+### Set like
 
-declare const maxNumOfValues: number;
-const set = new LRUSet(maxNumOfValues);
-```
+`SetLike` is a set-like constructor, with the same cache-replacement-policy.
 
-### LFU
-
-LFU(Least Frequently Used) implementations.
-
-#### LFUMap
-
-When the upper limit is reached, replaces the entry with LFU algorithm.
-
-```ts
-import { LFUMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
-
-declare const maxNumOfEntries: number;
-const map = new LFUMap(maxNumOfEntries);
-```
-
-#### LFUSet
-
-When the upper limit is reached, replaces the value with LFU algorithm.
+`LFUSet` preferentially removes item with fewer references (by `has` or `add`).
 
 ```ts
 import { LFUSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { assert, assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
-declare const maxNumOfValues: number;
-const set = new LFUSet(maxNumOfValues);
+declare const capacity: 2;
+
+const set = new LFUSet<number>(capacity);
+
+set.add(200);
+set.add(201);
+
+assertEquals(set.size, 2);
+assert(set.has(200));
+
+set.add(202);
+
+assert(set.has(200));
+assert(set.has(202));
 ```
 
-## Common
+### Initial value
 
-List items common to all implementations.
-
-### Interface
-
-All instance have following members.
-
-MapLike:
+Accepts an initial value, like `Map` or `Set`. If overcapacity occurs, the cache
+is adjusted according to the policy.
 
 ```ts
-interface MapLike<K, V> {
-  /** The number of entries. */
-  size: number;
+import { FIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
-  /** Whether has an entry with the given {@link key}. */
-  has: (key: K) => boolean;
-
-  /** Returns the value of the entry with the given {@link key}, if any such entry exists; otherwise returns `undefined`. */
-  get: (key: K) => V | undefined;
-
-  /** Adds an entry with the given {@link key} mapped to the given {@link value}. */
-  set: (key: K, value: V) => this;
-
-  /** Deletes the entry with the given {@link key}. */
-  delete: (key: K) => boolean;
-
-  /** Removes all entries. */
-  clear: () => void;
-}
+const set = new FIFOSet<number>(3, [0, 1, 2, 3, 4, 5]);
+assertEquals(set.size, 3);
 ```
 
-SetLike:
-
-```ts
-interface SetLike<T> {
-  /** The number of values. */
-  size: number;
-
-  /** Whether has the given {@link value}. */
-  has: (value: T) => boolean;
-
-  /** Adds the given {@link value}. */
-  add: (value: T) => this;
-
-  /** Deletes the given {@link value}. */
-  delete: (value: T) => boolean;
-
-  /** Removes all values. */
-  clear: () => void;
-}
-```
-
-### Throwing error
+### Errors
 
 All constructors specify a capacity as their first argument.
 
@@ -188,6 +102,22 @@ import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() => new FIFOMap(-1));
 ```
+
+### Difference from Map and Set
+
+`MapLike` and `SetLike` are not `Iterable`.
+
+The following members are not implemented.
+
+- `Symbol.iterator`
+- `forEach`
+- `entries`
+- `keys`
+- `values`
+
+Currently, these are outside the scope of the specification. For more
+information, check
+[Data iteration and order](https://github.com/tc39/proposal-policy-map-set/issues/3).
 
 ## API
 
