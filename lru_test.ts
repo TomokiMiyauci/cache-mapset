@@ -83,6 +83,7 @@ describe("LRUMap", () => {
 
   it("should throw error if max entries is negative", () => {
     assertThrows(() => new LRUMap(-1));
+    assertThrows(() => new LRUMap(NaN));
   });
 
   it("clear should delete all entries", () => {

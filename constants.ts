@@ -2,5 +2,5 @@
 // This module is browser compatible.
 
 export const enum Msg {
-  InvalidCapacity = "capacity must be non-negative",
+  InvalidCapacity = "invalid capacity",
 }

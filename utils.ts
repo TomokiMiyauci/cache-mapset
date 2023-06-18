@@ -13,9 +13,11 @@ export abstract class BaseMap<K, V> implements MapLike<K, V> {
    * @throws {RangeError} If {@link capacity} is invalid range.
    */
   constructor(capacity: number) {
-    assertNonNegativeNumber(capacity, Msg.InvalidCapacity, RangeError);
+    if (isNaN(capacity)) throw new RangeError(Msg.InvalidCapacity);
 
-    capacity = Math.floor(capacity);
+    capacity = toIntegerOrInfinity(capacity);
+
+    assertNonNegativeNumber(capacity, Msg.InvalidCapacity, RangeError);
 
     this.cache = new Map();
     this.capacity = capacity;
@@ -39,6 +41,17 @@ export abstract class BaseMap<K, V> implements MapLike<K, V> {
   get size(): number {
     return this.cache.size;
   }
+}
+
+/** Returns either a normal completion containing either an integer, `Infinity`, or `-Infinity`.
+ * @see https://tc39.es/ecma262/#sec-tointegerorinfinity
+ */
+export function toIntegerOrInfinity(number: number): number {
+  if (isNaN(number) || !number) return 0;
+
+  if (number === Infinity || number === -Infinity) return number;
+
+  return Math.trunc(number);
 }
 
 export abstract class BaseSet<T> implements SetLike<T> {
