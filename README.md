@@ -17,6 +17,18 @@ implementation. This can be used as a cache for TC39
 [proposal-function-memo](https://github.com/tc39/proposal-function-memo) and its
 [implementation](https://github.com/TomokiMiyauci/memo).
 
+## Table of Contents <!-- omit in toc -->
+
+- [Install](#install)
+- [Usage](#usage)
+  - [Set like](#set-like)
+  - [Initial value](#initial-value)
+  - [Errors](#errors)
+  - [Difference from Map and Set](#difference-from-map-and-set)
+- [API](#api)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Install
 
 deno.land:
