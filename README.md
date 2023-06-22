@@ -17,6 +17,20 @@ implementation. This can be used as a cache for TC39
 [proposal-function-memo](https://github.com/tc39/proposal-function-memo) and its
 [implementation](https://github.com/TomokiMiyauci/memo).
 
+## Install
+
+deno.land:
+
+```ts
+import * as mod from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+```
+
+npm:
+
+```bash
+npm i cache-mapset
+```
+
 ## Usage
 
 All Map-like constructors specify capacity.
