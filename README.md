@@ -22,7 +22,7 @@ implementation. This can be used as a cache for TC39
 deno.land:
 
 ```ts
-import * as mod from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import * as mod from "https://deno.land/x/cache_mapset/mod.ts";
 ```
 
 npm:
@@ -39,7 +39,7 @@ When the limit is reached, the cache is adjusted according to the cache
 replacement policy.
 
 ```ts
-import { LRUMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { LRUMap } from "https://deno.land/x/cache_mapset/mod.ts";
 import { assert, assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 declare const capacity: 2;
@@ -72,7 +72,7 @@ It provides a Map-like constructor with the following cache-replacement-policy:
 `LFUSet` preferentially removes item with fewer references (by `has` or `add`).
 
 ```ts
-import { LFUSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { LFUSet } from "https://deno.land/x/cache_mapset/mod.ts";
 import { assert, assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 declare const capacity: 2;
@@ -97,7 +97,7 @@ Accepts an initial value, like `Map` or `Set`. If overcapacity occurs, the cache
 is adjusted according to the policy.
 
 ```ts
-import { FIFOSet } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { FIFOSet } from "https://deno.land/x/cache_mapset/mod.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 const set = new FIFOSet<number>(3, [0, 1, 2, 3, 4, 5]);
@@ -111,7 +111,7 @@ All constructors specify a capacity as their first argument.
 If it is a negative number, an error is thrown.
 
 ```ts
-import { FIFOMap } from "https://deno.land/x/cache_mapset@$VERSION/mod.ts";
+import { FIFOMap } from "https://deno.land/x/cache_mapset/mod.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() => new FIFOMap(-1));

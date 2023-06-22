@@ -24,7 +24,7 @@ class Container<T> {
 /** `Map` with an upper limit, objects like. When the upper limit is reached, replaces the entry with LFU algorithm.
  * @example
  * ```ts
- * import { LFUMap } from "https://deno.land/x/cache_mapset@$VERSION/lfu.ts";
+ * import { LFUMap } from "https://deno.land/x/cache_mapset/lfu.ts";
  *
  * declare const maxNumOfEntries: number;
  * const map = new LFUMap(maxNumOfEntries);
@@ -144,7 +144,7 @@ export class LFUMap<K, V> implements MapLike<K, V> {
 /** `Set` with an upper limit, objects like. When the upper limit is reached, replaces the value with LFU algorithm.
  * @example
  * ```ts
- * import { LFUSet } from "https://deno.land/x/cache_mapset@$VERSION/lfu.ts";
+ * import { LFUSet } from "https://deno.land/x/cache_mapset/lfu.ts";
  *
  * declare const maxNumOfValues: number;
  * const set = new LFUSet(maxNumOfValues);
